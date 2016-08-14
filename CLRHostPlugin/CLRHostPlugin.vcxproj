@@ -22,6 +22,7 @@
     <ProjectGuid>{D537A879-01B7-47CA-A757-367A63CD66C4}</ProjectGuid>
     <RootNamespace>CLRHostPlugin</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -91,23 +92,26 @@
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(LibraryPath)</LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(LibraryPath)</LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(LibraryPath)</LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(LibraryPath)</LibraryPath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(VC_IncludePath);$(WindowsSDK_IncludePath);$(IncludePath)</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(VC_IncludePath);$(WindowsSDK_IncludePath);$(IncludePath)</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(VC_IncludePath);$(WindowsSDK_IncludePath);$(IncludePath)</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(VC_IncludePath);$(WindowsSDK_IncludePath);$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(WindowsSDK80Path)Lib\win8\um\x86;$(WindowsSDK80Path)Lib\winv6.3\um\x86;$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(WindowsSDK80Path)Lib\win8\um\x86;$(WindowsSDK80Path)Lib\winv6.3\um\x86;$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(WindowsSDK80Path)Lib\win8\um\x64;$(WindowsSDK80Path)Lib\winv6.3\um\x64;$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(WindowsSDK80Path)Lib\win8\um\x64;$(WindowsSDK80Path)Lib\winv6.3\um\x64;$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(WindowsSDK80Path)Include\um;$(WindowsSDK80Path)Include\shared;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(WindowsSDK80Path)Include\um;$(WindowsSDK80Path)Include\shared;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(WindowsSDK80Path)Include\um;$(WindowsSDK80Path)Include\shared;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(WindowsSDK80Path)Include\um;$(WindowsSDK80Path)Include\shared;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</GenerateManifest>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</GenerateManifest>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</GenerateManifest>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</GenerateManifest>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>$(ProjectName)</TargetName>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\OBS\OBSApi;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>"$(SolutionDir)..\OBS\OBSApi";%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CLR_DLL;WIN32;$(CHP_VERSION);_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -127,9 +131,10 @@
       <TargetMachine>MachineX86</TargetMachine>
       <ImportLibrary>
       </ImportLibrary>
+      <AssemblyDebug>true</AssemblyDebug>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(OutDir)$(ProjectName).dll" "$(SolutionDir)..\OBS\rundir\plugins"</Command>
+      <Command>copy "$(OutDir)$(TargetName).dll" "$(SolutionDir)..\OBS\rundir\plugins"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -168,7 +173,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\OBS\OBSApi;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>"$(SolutionDir)..\OBS\OBSApi";%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>CLR_DLL;WIN32;$(CHP_VERSION);NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -179,8 +184,8 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>OBSApi.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\OBS\OBSApi\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>"$(SolutionDir)..\OBS\OBSApi\Release";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <ProgramDatabaseFile>$(SolutionDir)..\OBS\rundir\pdb32\$(TargetName).pdb</ProgramDatabaseFile>
       <StripPrivateSymbols>$(SolutionDir)..\OBS\rundir\pdb32\stripped\$(TargetName).pdb</StripPrivateSymbols>
       <SubSystem>Windows</SubSystem>

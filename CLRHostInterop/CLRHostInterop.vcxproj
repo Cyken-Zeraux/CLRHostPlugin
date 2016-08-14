@@ -72,33 +72,33 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(WindowsSDK80Path)Lib\win8\um\x86;$(WindowsSDK80Path)Lib\winv6.3\um\x86;$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <GenerateManifest>false</GenerateManifest>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(IncludePath)</IncludePath>
+    <IncludePath>$(WindowsSDK80Path)Include\um;$(WindowsSDK80Path)Include\shared;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(WindowsSDK80Path)Lib\win8\um\x64;$(WindowsSDK80Path)Lib\winv6.3\um\x64;$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <GenerateManifest>false</GenerateManifest>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(IncludePath)</IncludePath>
+    <IncludePath>$(WindowsSDK80Path)Include\um;$(WindowsSDK80Path)Include\shared;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(WindowsSDK80Path)Lib\win8\um\x86;$(WindowsSDK80Path)Lib\winv6.3\um\x86;$(DXSDK_DIR)Lib\x86;$(LibraryPath)</LibraryPath>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <GenerateManifest>false</GenerateManifest>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(IncludePath)</IncludePath>
+    <IncludePath>$(WindowsSDK80Path)Include\um;$(WindowsSDK80Path)Include\shared;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(WindowsSDK80Path)Lib\win8\um\x64;$(WindowsSDK80Path)Lib\winv6.3\um\x64;$(DXSDK_DIR)Lib\x64;$(LibraryPath)</LibraryPath>
     <OutDir>$(Platform)\$(Configuration)\</OutDir>
     <GenerateManifest>false</GenerateManifest>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(IncludePath)</IncludePath>
+    <IncludePath>$(WindowsSDK80Path)Include\um;$(WindowsSDK80Path)Include\shared;$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -108,13 +108,17 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\OBS\OBSApi;$(ProjectDir)..\CLRHostPlugin</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>"$(SolutionDir)..\OBS\OBSApi";$(ProjectDir)..\CLRHostPlugin</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>OBSApi.lib;dxgi.lib;dxguid.lib;d3d10_1.lib;d3d10.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>"$(SolutionDir)..\OBS\OBSApi\Debug";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <StripPrivateSymbols>$(SolutionDir)..\OBS\rundir\pdb32\stripped\$(TargetName).pdb</StripPrivateSymbols>
+      <MapFileName>
+      </MapFileName>
+      <ProgramDatabaseFile>$(SolutionDir)..\OBS\rundir\pdb32\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(OutDir)$(ProjectName).dll" "$(SolutionDir)..\OBS\rundir\plugins\CLRHostPlugin</Command>
@@ -152,9 +156,11 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalDependencies>OBSApi.lib;dxgi.lib;dxguid.lib;d3d10_1.lib;d3d10.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>"$(SolutionDir)..\OBS\OBSApi\Release";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ProgramDatabaseFile>$(SolutionDir)..\OBS\rundir\pdb32\$(TargetName).pdb</ProgramDatabaseFile>
+      <StripPrivateSymbols>$(SolutionDir)..\OBS\rundir\pdb32\stripped\$(TargetName).pdb</StripPrivateSymbols>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(OutDir)$(ProjectName).dll" "$(SolutionDir)..\OBS\rundir\plugins\CLRHostPlugin</Command>

@@ -1,6 +1,7 @@
 #include "OBSApi.h"
 #include "GraphicsSystem.h"
-#include <d3d10.h>
+#include <D3D10_1.h>
+#include <D3DX10.h>
 
 namespace CLROBS
 {
